@@ -3,12 +3,12 @@
 <html>
 <head>
   <title>Golden Eagle Flight Plan: Edit Checkpoint</title>
-  <c:import url="../style.jsp"></c:import>
+  <c:import url="../header.jsp"></c:import>
 </head>
 <body>
 <h2>Golden Eagle Flight Plan</h2>
 
-<h3><a href="/gefp">Golden Eagle Flight Plan</a> - Edit Check Point</h3>
+<h3><a href="gefp">Golden Eagle Flight Plan</a> - Edit Check Point</h3>
 
 
 
@@ -18,7 +18,7 @@
 <c:if test="${not empty requestScope.checkpoint}">
 
 
-  <form method="post" action="/gefp/editCheckpoint">
+  <form method="post" action="${applicationScope.homePath}gefp/editCheckpoint">
   <table>
     <tbody>
     <tr>

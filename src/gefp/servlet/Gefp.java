@@ -1,4 +1,4 @@
-package gefp;
+package gefp.servlet;
 
 import gefp.models.Checkpoint;
 import gefp.models.CheckpointManager;
@@ -18,6 +18,8 @@ public class Gefp extends HttpServlet
 {
     private static String[] runways = new String[]{"Academics", "Career Preparation", "Leadership and Community Engagement"};
 
+    private static String homePath;
+
     @Override
     public void init(ServletConfig config) throws ServletException
     {
@@ -25,11 +27,13 @@ public class Gefp extends HttpServlet
 
         config.getServletContext().setAttribute("runways", runways);
 
-        if (config.getServletContext().getRealPath("/").contains("HW")) {
-            config.getServletContext().setAttribute("absPath", "/");
+        if (config.getServletContext().getRealPath("/").contains("/HW/")) {
+            homePath = "/";
         } else {
-            config.getServletContext().setAttribute("absPath", "/cs520stu40/");
+            homePath = "http://cs3.calstatela.edu:8080/cs520stu40/";
         }
+
+        config.getServletContext().setAttribute("homePath", homePath);
 
 //        try {
 //            Class.forName("com.mysql.jdbc.Driver");
@@ -56,6 +60,12 @@ public class Gefp extends HttpServlet
     {
         return string == null || string.trim().length() == 0;
     }
+
+    public static String getHomePath()
+    {
+        return homePath;
+    }
+
 
 
 }

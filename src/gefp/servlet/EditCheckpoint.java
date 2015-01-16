@@ -1,4 +1,4 @@
-package gefp;
+package gefp.servlet;
 
 import gefp.models.Checkpoint;
 import gefp.models.CheckpointManager;
@@ -20,17 +20,20 @@ public class EditCheckpoint extends HttpServlet
 
     private int id;
 
+    private String runway;
+
     private Checkpoint chk = null;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         checkpoints = new CheckpointManager(request.getSession().getAttribute("checkpoints"));
-        id = getFid(request);
+        parseFid(request);
 
         try {
-            chk = checkpoints.getList().get(id);
+            chk = checkpoints.get(runway, id);
         } catch (IndexOutOfBoundsException e) {
+            e.printStackTrace();
             errors.clear();
             errors.add("Invalid checkpoint ID!");
         }
@@ -44,11 +47,11 @@ public class EditCheckpoint extends HttpServlet
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException
     {
         checkpoints = new CheckpointManager(request.getSession().getAttribute("checkpoints"));
-        id = getFid(request);
+        parseFid(request);
         String action = request.getParameter("action");
 
         try {
-            chk = checkpoints.getList().get(id);
+            chk = checkpoints.get(runway, id);
         } catch (IndexOutOfBoundsException e) {
             doGet(request, response);
             return;
@@ -62,14 +65,14 @@ public class EditCheckpoint extends HttpServlet
         request.getSession().setAttribute("checkpoints", checkpoints.getList());
 
         if (errors.isEmpty())
-            response.sendRedirect("/gefp");
+            response.sendRedirect(Gefp.getHomePath() + "gefp");
         else
             doGet(request, response);
     }
 
     private void delete()
     {
-        checkpoints.getList().remove(id);
+        checkpoints.delete(runway, id);
     }
 
     private void update(HttpServletRequest request)
@@ -79,16 +82,17 @@ public class EditCheckpoint extends HttpServlet
         if (Gefp.isEmpty(name)) errors.add("Invalid name!");
         else {
             chk.setName(name);
-            checkpoints.getList().set(id, chk);
+            checkpoints.set(runway, id, chk);
         }
     }
 
-    private int getFid(HttpServletRequest request)
+    private void parseFid(HttpServletRequest request)
     {
         try {
-            return Integer.parseInt(request.getParameter("fid")) - 1;
-        } catch (NumberFormatException e) {
-            return 0;
+            String[] parts = request.getParameter("fid").trim().split("-");
+            runway = parts[0];
+            id = Integer.parseInt(parts[1]) - 1;
+        } catch (NullPointerException e) {
         }
     }
 

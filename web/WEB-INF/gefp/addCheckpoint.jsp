@@ -4,14 +4,14 @@
 <html>
 <head>
     <title>Golden Eagle Flight Plan: Add Checkpoint</title>
-    <c:import url="../style.jsp"></c:import>
+    <c:import url="../header.jsp"></c:import>
 </head>
 <body>
 <h2>Golden Eagle Flight Plan</h2>
 
-<h3><a href="/gefp">Golden Eagle Flight Plan</a> - Add A Check Point</h3>
+<h3><a href="gefp">Golden Eagle Flight Plan</a> - Add A Check Point</h3>
 <div class="region">
-    <form action="/gefp/addCheckpoint" method="post">
+    <form action="${applicationScope.homePath}gefp/addCheckpoint" method="post">
 <c:forEach items="${requestScope.errors}" var="e">
     <li>${e}</li>
 </c:forEach>

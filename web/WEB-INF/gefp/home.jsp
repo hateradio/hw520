@@ -5,15 +5,17 @@
 <html>
 <head>
     <title>Golden Eagle Flight Plan</title>
-    <c:import url="../style.jsp"></c:import>
+    <c:import url="../header.jsp"></c:import>
 </head>
 <body>
 
 <h2>Golden Eagle Flight Plan</h2>
 
-<h3><a href="/gefp/addStage">Add A Stage</a> | <a href="/gefp/addCheckpoint">Add A Check Point</a></h3>
+<h3><a href="gefp/addStage">Add A Stage</a> | <a href="gefp/addCheckpoint">Add A Check Point</a></h3>
+
 
 <%--
+${sessionScope.stages}
 ${manager.getList()}
 
 
@@ -42,7 +44,7 @@ ${manager.getList()}
 <c:forEach items="${applicationScope.runways}" var="runway">
         <td>
 <c:forEach items="${requestScope.manager.filter(runway, stage)}" var="ch">
-            <p><label><input type="checkbox" value="${ch.fid}"> ${ch.name}</label> <a href="/gefp/editCheckpoint?fid=${ch.fid}">[Edit]</a></p>
+            <p><label><input type="checkbox" value="${ch.fid}"> ${ch.name}</label> <a href="gefp/editCheckpoint?fid=${ch.fid}">[Edit]</a></p>
 </c:forEach>
         </td>
 </c:forEach>

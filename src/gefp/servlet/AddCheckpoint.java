@@ -1,4 +1,4 @@
-package gefp;
+package gefp.servlet;
 
 import gefp.models.Checkpoint;
 import gefp.models.CheckpointManager;
@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(urlPatterns = "/gefp/addCheckpoint")
+@WebServlet("/gefp/addCheckpoint")
 public class AddCheckpoint extends HttpServlet
 {
 
@@ -36,11 +36,11 @@ public class AddCheckpoint extends HttpServlet
         if (Gefp.isEmpty(name)) errors.add("Invalid checkpoint!");
 
         if (errors.isEmpty()) {
-            checkpoints.getList().add(new Checkpoint(runway, stage, name));
+            checkpoints.add(runway, new Checkpoint(runway, stage, name));
 
             request.getSession().setAttribute("checkpoints", checkpoints.getList());
 
-            response.sendRedirect("/gefp");
+            response.sendRedirect(Gefp.getHomePath() + "gefp");
         } else {
             request.setAttribute("errors", errors);
             doGet(request, response);

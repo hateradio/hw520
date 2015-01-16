@@ -1,4 +1,4 @@
-package gefp;
+package gefp.servlet;
 
 import java.io.IOException;
 import java.io.PrintWriter;

@@ -2,7 +2,7 @@ package gefp.models;
 
 public class Checkpoint
 {
-    private int fid;
+    private String fid;
 
     private String runway;
 
@@ -24,12 +24,12 @@ public class Checkpoint
         return this.runway.equals(runway) && this.stage.equals(stage);
     }
 
-    public int getFid()
+    public String getFid()
     {
         return fid;
     }
 
-    public void setFid(int fid)
+    public void setFid(String fid)
     {
         this.fid = fid;
     }

@@ -1,4 +1,4 @@
-package gefp;
+package gefp.servlet;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -6,7 +6,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.HashSet;
 
 @WebServlet(urlPatterns = "/gefp/addStage")
 public class AddStage extends HttpServlet
@@ -30,19 +30,19 @@ public class AddStage extends HttpServlet
         if (!isEmpty(stage)) {
             updateStages(request, stage);
 
-            response.sendRedirect("/gefp");
+            response.sendRedirect(Gefp.getHomePath() + "gefp");
         } else {
             response.getOutputStream().print("Invalid Stage Name!");
         }
 
     }
 
-    private ArrayList<String> updateStages(HttpServletRequest request, String stage)
+    private HashSet<String> updateStages(HttpServletRequest request, String stage)
     {
-        ArrayList<String> stages = (ArrayList<String>) request.getSession().getAttribute("stages");
+        HashSet<String> stages = (HashSet<String>) request.getSession().getAttribute("stages");
 
         if (stages == null) {
-            stages = new ArrayList<String>();
+            stages = new HashSet<>();
         }
 
         stages.add(stage);

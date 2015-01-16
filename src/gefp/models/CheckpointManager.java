@@ -1,25 +1,51 @@
 package gefp.models;
 
-import gefp.Gefp;
+import gefp.servlet.Gefp;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class CheckpointManager
 {
-    private ArrayList<Checkpoint> list;
+    private HashMap<String, ArrayList<Checkpoint>> list;
 
     public CheckpointManager(Object sessionList)
     {
-        list = (ArrayList<Checkpoint>) sessionList;
+        list = (HashMap<String, ArrayList<Checkpoint>>) sessionList;
 
         if (list == null) {
-            list = new ArrayList<Checkpoint>();
+            list = new HashMap<String, ArrayList<Checkpoint>>();
         }
     }
 
-    public ArrayList<Checkpoint> getList()
+    public HashMap<String, ArrayList<Checkpoint>> getList()
     {
         return list;
+    }
+
+    public void add(String runway, Checkpoint checkpoint)
+    {
+        if (!list.containsKey(runway.trim()))
+            list.put(runway.trim(), new ArrayList<Checkpoint>());
+
+        if (!list.get(runway).contains(checkpoint))
+            list.get(runway).add(checkpoint);
+    }
+
+    public Checkpoint get(String runway, int id)
+    {
+        return list.get(runway).get(id);
+    }
+
+    public void set(String runway, int id, Checkpoint checkpoint)
+    {
+        list.get(runway).set(id, checkpoint);
+    }
+
+    public void delete(String runway, int id)
+    {
+        list.get(runway).remove(id);
     }
 
     public ArrayList<Checkpoint> filter(String runway, String stage)
@@ -28,15 +54,18 @@ public class CheckpointManager
 
         if (!Gefp.isEmpty(runway) && !Gefp.isEmpty(stage)) {
             runway = runway.trim();
-            stage = stage.trim();
 
-            int fid = 1;
-            for (Checkpoint c : list) {
-                if (c.isIn(runway, stage)) {
-                    c.setFid(fid);
-                    filter.add(c);
+            if (list.containsKey(runway)) {
+                stage = stage.trim();
+
+                int fid = 1;
+                for (Checkpoint c : list.get(runway)) {
+                    if (c.isIn(runway, stage)) {
+                        c.setFid(String.format("%s-%d", runway, fid));
+                        filter.add(c);
+                    }
+                    fid++;
                 }
-                fid++;
             }
         }
 
