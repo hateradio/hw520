@@ -1,0 +1,38 @@
+html, body {
+    font-family: sans-serif;
+    color: #444;
+    font-size: 100%;
+}
+
+a:link {
+    color: darkcyan;
+}
+
+a:visited {
+    color: darkcyan;
+}
+
+a:hover {
+    color: dodgerblue;
+}
+
+input {
+    width: 100%;
+    font-size: 1em;
+    padding: .3em;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    border: 1px solid #333;
+}
+
+th, td {
+    padding: .3em .5em;
+    border: 1px solid #555;
+}
+
+.error {
+    color: darkred;
+}
